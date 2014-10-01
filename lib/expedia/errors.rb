@@ -14,7 +14,7 @@ module Expedia
     # @handling value indicating the severity of the exception and how it may be handled
 
     attr_accessor :category, :presentation_message, :verbose_message,
-      :status, :error_body, :handling
+      :status, :error_body, :handling, :alt_locations
 
     # Create a new API Error
     # @return the newly created APIError
@@ -23,6 +23,7 @@ module Expedia
       @status = status
 
       begin
+        @alt_locations = @error_body[@error_body.keys[0]].fetch('LocationInfos')
         @error_body = @error_body[@error_body.keys[0]]['EanWsError']
       rescue
       end
